@@ -1,6 +1,7 @@
 package com.aitlp.domain;
 
 
+import com.aitlp.util.Neo4JCustomIdStrategy;
 import lombok.Data;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
@@ -16,8 +17,8 @@ import java.util.List;
 public class Person {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = Neo4JCustomIdStrategy.class)
+    private String id;
     private String name;
     private String gender;
     private String idCard;

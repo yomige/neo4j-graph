@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 
-public interface PersonRepository extends Neo4jRepository<Person, Long> {
+public interface PersonRepository extends Neo4jRepository<Person, String> {
 
     @Query("MATCH (n:Person {name:{name}}) RETURN n")
     List<Person> findByName(@Param("name") String name);
