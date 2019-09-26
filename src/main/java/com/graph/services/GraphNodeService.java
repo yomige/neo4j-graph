@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.graph.domain.Edge;
 import com.graph.domain.GraphNode;
 import com.graph.domain.SigmaGraphNode;
+import com.graph.repositories.GraphEdgeRepository;
 import com.graph.repositories.GraphNodeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,9 @@ public class GraphNodeService {
 
     @Autowired
     private GraphNodeRepository graphNodeRepository;
+
+    @Autowired
+    private GraphEdgeRepository graphEdgeRepository;
 
     public List<GraphNode> findByName(String name) {
         return graphNodeRepository.findByName(name);
@@ -75,7 +79,6 @@ public class GraphNodeService {
                         startNode.getEdges().add(edge);
                     }
                 }
-
                 List<GraphNode> nodes = (List<GraphNode>) graphNodeRepository.saveAll(graphNodeList);
                 resultMap.put("data", nodes);
             }
@@ -91,9 +94,10 @@ public class GraphNodeService {
         return resultMap;
     }
 
-    public Map<String, Object> findAll() {
-        Iterable<GraphNode> result = graphNodeRepository.findAll();
-        return toD3Format(result);
+    public Map<String, Object> queryGraph() {
+        List<GraphNode> nodes = (List<GraphNode>) graphNodeRepository.findAll();
+        List<Edge> edges = (List<Edge>) graphEdgeRepository.findAll();
+        return map("nodes", nodes, "edges", edges);
     }
 
 

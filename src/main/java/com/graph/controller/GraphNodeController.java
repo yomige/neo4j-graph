@@ -25,9 +25,9 @@ public class GraphNodeController {
         return graphNodeService.save(graphNodeJson);
     }
 
-    @GetMapping("/findAll")
-    public Map<String, Object> findAll() {
-        return graphNodeService.findAll();
+    @GetMapping("/queryGraph")
+    public Map<String, Object> queryGraph() {
+        return graphNodeService.queryGraph();
     }
 
 }

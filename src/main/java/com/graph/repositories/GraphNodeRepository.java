@@ -11,4 +11,7 @@ public interface GraphNodeRepository extends Neo4jRepository<GraphNode, String> 
 
     @Query("MATCH (n:GraphNode {`properties.name`:{name}}) RETURN n")
     List<GraphNode> findByName(@Param("name") String name);
+
+    @Query("MATCH (n) RETURN n")
+    List<GraphNode> queryGraph();
 }

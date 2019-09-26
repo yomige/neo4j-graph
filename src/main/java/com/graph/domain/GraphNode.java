@@ -13,7 +13,6 @@ import java.util.Map;
 /**
  * 图谱节点：动态增加属性
  */
-@Data
 @NodeEntity
 public class GraphNode {
     @Id
@@ -36,4 +35,69 @@ public class GraphNode {
     @JsonIgnoreProperties({ "startNode", "endNode" })
     @Relationship(type = "OWNS")
     private List<Edge> edges = new ArrayList<>();
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
+
+    public String getTypeUri() {
+        return typeUri;
+    }
+
+    public void setTypeUri(String typeUri) {
+        this.typeUri = typeUri;
+    }
+
+    public Double getX() {
+        return x;
+    }
+
+    public void setX(Double x) {
+        this.x = x;
+    }
+
+    public Double getY() {
+        return y;
+    }
+
+    public void setY(Double y) {
+        this.y = y;
+    }
+
+    public Map<String, Object> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Map<String, Object> properties) {
+        this.properties = properties;
+    }
+
+    public List<Edge> getEdges() {
+        return edges;
+    }
+
+    public void setEdges(List<Edge> edges) {
+        this.edges = edges;
+    }
 }
