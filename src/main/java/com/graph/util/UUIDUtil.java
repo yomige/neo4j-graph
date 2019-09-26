@@ -1,4 +1,4 @@
-package com.aitlp.util;
+package com.graph.util;
 
 import java.util.UUID;
 

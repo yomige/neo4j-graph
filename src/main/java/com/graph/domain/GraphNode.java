@@ -1,6 +1,7 @@
-package com.aitlp.domain;
+package com.graph.domain;
 
-import com.aitlp.util.Neo4JCustomIdStrategy;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.graph.util.Neo4JCustomIdStrategy;
 import lombok.Data;
 import org.neo4j.ogm.annotation.*;
 
@@ -19,9 +20,20 @@ public class GraphNode {
     @GeneratedValue(strategy = Neo4JCustomIdStrategy.class)
     private String id;
 
+    private String label;
+
+    private String labelName;
+
+    private String typeUri;
+
+    private Double x;
+
+    private Double y;
+
     @Properties
     private Map<String, Object> properties = new HashMap<>();
 
-    @Relationship(type = "BELONG_TO", direction = Relationship.INCOMING)
-    private List<House> houses = new ArrayList<>();
+    @JsonIgnoreProperties({ "startNode", "endNode" })
+    @Relationship(type = "OWNS")
+    private List<Edge> edges = new ArrayList<>();
 }

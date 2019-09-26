@@ -1,4 +1,4 @@
-package com.aitlp.util;
+package com.graph.util;
 
 import org.neo4j.ogm.id.IdStrategy;
 

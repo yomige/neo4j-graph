@@ -1,7 +1,7 @@
-package com.aitlp.controller;
+package com.graph.controller;
 
-import com.aitlp.domain.GraphNode;
-import com.aitlp.services.GraphNodeService;
+import com.graph.domain.GraphNode;
+import com.graph.services.GraphNodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +21,13 @@ public class GraphNodeController {
     }
 
     @PostMapping("/save")
-    public Map save(@RequestBody GraphNode graphNode) {
-        return graphNodeService.save(graphNode);
+    public Map save(@RequestBody String graphNodeJson) {
+        return graphNodeService.save(graphNodeJson);
     }
+
+    @GetMapping("/findAll")
+    public Map<String, Object> findAll() {
+        return graphNodeService.findAll();
+    }
+
 }
