@@ -3,6 +3,7 @@ package com.graph.services;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.graph.domain.Edge;
 import com.graph.domain.GraphNode;
 import com.graph.domain.SigmaGraphNode;
@@ -97,32 +98,25 @@ public class GraphNodeService {
     public Map<String, Object> queryGraph() {
         List<GraphNode> nodes = (List<GraphNode>) graphNodeRepository.findAll();
         List<Edge> edges = (List<Edge>) graphEdgeRepository.findAll();
-        return map("nodes", nodes, "edges", edges);
+        return map("nodes", toSigmaFormat(nodes), "edges", edges);
     }
 
 
-    private Map<String, Object> toD3Format(Iterable<GraphNode> graphNodes) {
+    private List<Map<String, Object>> toSigmaFormat(List<GraphNode> graphNodes) {
         List<Map<String, Object>> nodes = new ArrayList<>();
-        List<Map<String, Object>> rels = new ArrayList<>();
-        Iterator<GraphNode> result = graphNodes.iterator();
-        while (result.hasNext()) {
-            Map<String, Object> node = new HashMap<>();
-            GraphNode graphNode = result.next();
-            node.put("id", graphNode.getId());
-            node.put("label", graphNode.getLabel());
-            node.put("labelName", graphNode.getLabelName());
-            node.put("typeUri", graphNode.getTypeUri());
-            node.put("x", graphNode.getX());
-            node.put("y", graphNode.getY());
-            List<Object> properties = new ArrayList<>();
-            for (Object value : graphNode.getProperties().values()) {
-                properties.add(value);
+        if (!ObjectUtils.isEmpty(graphNodes)) {
+            for (GraphNode graphNode : graphNodes) {
+                ObjectMapper m = new ObjectMapper();
+                Map<String, Object> node = m.convertValue(graphNode, Map.class);
+                List<Object> properties = new ArrayList<>();
+                for (Object value : graphNode.getProperties().values()) {
+                    properties.add(value);
+                }
+                node.put("properties", properties);
+                nodes.add(node);
             }
-            node.put("properties", properties);
-            nodes.add(node);
-            rels.addAll(handleEdges(graphNode.getEdges(), graphNode.getId()));
         }
-        return map("nodes", nodes, "edges", rels);
+        return nodes;
     }
 
     private Map<String, Object> map(String key1, Object value1, String key2, Object value2) {

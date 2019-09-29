@@ -29,13 +29,17 @@ public class GraphNode {
 
     private Double y;
 
+    private boolean active;
+
+    @Properties
+    private Map<String, Object> icon = new HashMap<>();
+
     @Properties
     private Map<String, Object> properties = new HashMap<>();
 
     @JsonIgnoreProperties({ "startNode", "endNode" })
-    @Relationship(type = "OWNS")
+    @Relationship(type = "EDGE")
     private List<Edge> edges = new ArrayList<>();
-
 
     public String getId() {
         return id;
@@ -83,6 +87,22 @@ public class GraphNode {
 
     public void setY(Double y) {
         this.y = y;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Map<String, Object> getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Map<String, Object> icon) {
+        this.icon = icon;
     }
 
     public Map<String, Object> getProperties() {
