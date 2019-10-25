@@ -2,7 +2,6 @@ package com.graph.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.graph.util.Neo4JCustomIdStrategy;
-import lombok.Data;
 import org.neo4j.ogm.annotation.*;
 
 import java.util.ArrayList;
@@ -19,6 +18,10 @@ public class GraphNode {
     @GeneratedValue(strategy = Neo4JCustomIdStrategy.class)
     private String id;
 
+    private String caseId;
+
+    private String color = "#7076ed";
+
     private String label;
 
     private String labelName;
@@ -34,10 +37,9 @@ public class GraphNode {
     @Properties
     private Map<String, Object> icon = new HashMap<>();
 
-    @Properties
-    private Map<String, Object> properties = new HashMap<>();
+    private String properties;
 
-    @JsonIgnoreProperties({ "startNode", "endNode" })
+    @JsonIgnoreProperties({"startNode", "endNode"})
     @Relationship(type = "EDGE")
     private List<Edge> edges = new ArrayList<>();
 
@@ -47,6 +49,22 @@ public class GraphNode {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCaseId() {
+        return caseId;
+    }
+
+    public void setCaseId(String caseId) {
+        this.caseId = caseId;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getLabel() {
@@ -105,11 +123,11 @@ public class GraphNode {
         this.icon = icon;
     }
 
-    public Map<String, Object> getProperties() {
+    public String getProperties() {
         return properties;
     }
 
-    public void setProperties(Map<String, Object> properties) {
+    public void setProperties(String properties) {
         this.properties = properties;
     }
 

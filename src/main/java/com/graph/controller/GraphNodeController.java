@@ -30,4 +30,10 @@ public class GraphNodeController {
         return graphNodeService.queryGraph();
     }
 
+    @GetMapping("/calculateShortestPath")
+    public Map<String, Object> calculateShortestPath(String sourceId, String targetId) {
+        return graphNodeService.calculateShortestPath(sourceId, targetId);
+    }
+
+
 }

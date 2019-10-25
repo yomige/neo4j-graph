@@ -12,6 +12,6 @@ public interface GraphNodeRepository extends Neo4jRepository<GraphNode, String> 
     @Query("MATCH (n:GraphNode {`properties.name`:{name}}) RETURN n")
     List<GraphNode> findByName(@Param("name") String name);
 
-    @Query("MATCH (n) RETURN n")
-    List<GraphNode> queryGraph();
+    @Query("MATCH (n1:GraphNode { id: {sourceId} }),(n2:GraphNode { id: {targetId} }), p = shortestPath((n1)-[*]-(n2)) WHERE length(p)> 1 RETURN p")
+    List<GraphNode> calculateShortestPath(@Param("sourceId") String sourceId,@Param("targetId") String targetId);
 }
